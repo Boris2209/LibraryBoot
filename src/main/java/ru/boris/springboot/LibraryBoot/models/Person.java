@@ -1,6 +1,11 @@
 package ru.boris.springboot.LibraryBoot.models;
 
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -10,6 +15,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Person")
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode(of = {"personId", "fullName", "year"})
 public class Person {
 
     @Id
@@ -28,52 +37,4 @@ public class Person {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
     private List<Book> books;
-
-    public Person() {
-    }
-
-    public int getPersonId() {
-        return personId;
-    }
-
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return personId == person.personId && year == person.year && Objects.equals(fullName, person.fullName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(personId, fullName, year);
-    }
 }
